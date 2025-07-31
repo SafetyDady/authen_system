@@ -1,0 +1,54 @@
+# FastAPI and Server
+fastapi==0.116.1
+uvicorn[standard]==0.35.0
+
+# Database
+sqlalchemy==2.0.41
+alembic==1.14.0
+psycopg2-binary==2.9.10
+redis==5.2.1
+
+# Authentication & Security
+pyjwt==2.10.1
+passlib[bcrypt]==1.7.4
+bcrypt==4.3.0
+python-multipart==0.0.20
+
+# Configuration & Environment
+pydantic==2.10.5
+pydantic-settings==2.10.1
+python-dotenv==1.0.1
+
+# HTTP Client & CORS
+httpx==0.28.1
+#python-cors==1.7.0
+
+# Validation & Serialization
+email-validator==2.2.0
+python-dateutil==2.9.0
+
+# Development & Testing
+pytest==8.3.4
+pytest-asyncio==0.25.0
+pytest-cov==6.0.0
+httpx==0.28.1
+
+# Logging & Monitoring
+structlog==24.4.0
+rich==13.9.4
+
+# Background Tasks
+celery==5.4.0
+flower==2.0.1
+
+# File Upload & Storage
+python-magic==0.4.27
+pillow==11.1.0
+
+# Rate Limiting
+slowapi==0.1.9
+
+# Documentation
+mkdocs==1.6.1
+#mkdocs-material==9.5.57
+

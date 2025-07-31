@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ - Authentication System Enterprise</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Professional Enterprise Login Styles */
+        :root {
+            /* Enhanced Professional Color Palette */
+            --primary-navy: #0F172A;
+            --primary-blue: #1E40AF;
+            --primary-blue-light: #3B82F6;
+            --primary-blue-dark: #1E3A8A;
+            --primary-blue-ultra-light: #EFF6FF;
+            
+            --accent-indigo: #4F46E5;
+            --accent-purple: #7C3AED;
+            --accent-teal: #0D9488;
+            
+            --neutral-50: #F8FAFC;
+            --neutral-100: #F1F5F9;
+            --neutral-200: #E2E8F0;
+            --neutral-300: #CBD5E1;
+            --neutral-400: #94A3B8;
+            --neutral-500: #64748B;
+            --neutral-600: #475569;
+            --neutral-700: #334155;
+            --neutral-800: #1E293B;
+            --neutral-900: #0F172A;
+            
+            /* Professional Gradients */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-dark: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%);
+            --gradient-blue: linear-gradient(135deg, #1E40AF 0%, #3B82F6 50%, #60A5FA 100%);
+            
+            /* Enhanced Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+            
+            /* Professional Typography */
+            --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-body: 'Prompt', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            
+            /* Enhanced Spacing */
+            --space-px: 1px;
+            --space-0: 0;
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            --space-20: 5rem;
+            --space-24: 6rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--gradient-dark);
+            color: var(--neutral-100);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Animated Background */
+        .login-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-dark);
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .login-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(79, 70, 229, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { 
+                background: 
+                    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(79, 70, 229, 0.15) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 40%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+            }
+            50% { 
+                background: 
+                    radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.2) 0%, transparent 60%),
+                    radial-gradient(circle at 20% 80%, rgba(79, 70, 229, 0.2) 0%, transparent 60%),
+                    radial-gradient(circle at 60% 60%, rgba(124, 58, 237, 0.15) 0%, transparent 60%);
+            }
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        .floating-element:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { left: 20%; animation-delay: 2s; }
+        .floating-element:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .floating-element:nth-child(4) { left: 40%; animation-delay: 6s; }
+        .floating-element:nth-child(5) { left: 50%; animation-delay: 8s; }
+        .floating-element:nth-child(6) { left: 60%; animation-delay: 10s; }
+        .floating-element:nth-child(7) { left: 70%; animation-delay: 12s; }
+        .floating-element:nth-child(8) { left: 80%; animation-delay: 14s; }
+        .floating-element:nth-child(9) { left: 90%; animation-delay: 16s; }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Main Login Container */
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-6);
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            box-shadow: var(--shadow-2xl);
+            padding: var(--space-12) var(--space-10);
+            position: relative;
+            overflow: hidden;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+        }
+
+        /* Brand Section */
+        .login-brand {
+            text-align: center;
+            margin-bottom: var(--space-12);
+            animation: fadeInDown 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-blue);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-6) auto;
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .login-logo:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .login-logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .login-title {
+            font-size: 32px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--neutral-900);
+            margin-bottom: var(--space-3);
+            letter-spacing: -0.025em;
+        }
+
+        .login-subtitle {
+            font-size: 16px;
+            color: var(--neutral-600);
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Security Badge */
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            background: rgba(34, 197, 94, 0.1);
+            color: #059669;
+            padding: var(--space-2) var(--space-4);
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: var(--space-4);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            animation: fadeIn 1s ease-out 0.6s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .security-icon {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* Alert System */
+        .alert-container {
+            margin-bottom: var(--space-6);
+            animation: slideInDown 0.5s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert {
+            padding: var(--space-4) var(--space-5);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .alert::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .alert-success {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.2);
+            color: #059669;
+        }
+
+        .alert-success::before {
+            background: #059669;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: #DC2626;
+        }
+
+        .alert-error::before {
+            background: #DC2626;
+        }
+
+        .alert-info {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.2);
+            color: #2563EB;
+        }
+
+        .alert-info::before {
+            background: #2563EB;
+        }
+
+        .alert-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            fill: currentColor;
+        }
+
+        /* Enhanced Form Styles */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--neutral-700);
+            margin-bottom: var(--space-2);
+            font-family: var(--font-display);
+        }
+
+        .form-control {
+            width: 100%;
+            height: 56px;
+            padding: var(--space-4) var(--space-5);
+            font-size: 16px;
+            font-family: var(--font-body);
+            border: 2px solid var(--neutral-200);
+            border-radius: 12px;
+            background: var(--neutral-50);
+            color: var(--neutral-900);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-control:hover:not(:focus) {
+            border-color: var(--neutral-300);
+            background: white;
+        }
+
+        .form-control.error {
+            border-color: #EF4444;
+            background: rgba(239, 68, 68, 0.05);
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+        }
+
+        .form-control::placeholder {
+            color: var(--neutral-400);
+            font-weight: 400;
+        }
+
+        /* Password Field Enhancement */
+        .password-field {
+            position: relative;
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: var(--space-4);
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--neutral-400);
+            cursor: pointer;
+            padding: var(--space-2);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .password-toggle-btn:hover {
+            color: var(--neutral-600);
+            background: var(--neutral-100);
+        }
+
+        .password-toggle-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        /* Enhanced Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin: var(--space-2) 0;
+        }
+
+        .checkbox-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .checkbox {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--neutral-300);
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox:checked {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+            transform: scale(1.05);
+        }
+
+        .checkbox:checked::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 6px;
+            width: 6px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .checkbox:hover:not(:checked) {
+            border-color: var(--primary-blue);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .checkbox-label {
+            font-size: 14px;
+            color: var(--neutral-600);
+            font-weight: 500;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* Enhanced Button */
+        .btn-primary {
+            width: 100%;
+            height: 56px;
+            background: var(--gradient-blue);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: var(--font-display);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:active:not(:disabled) {
+            transform: translateY(0);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Form Validation */
+        .form-error {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 13px;
+            color: #DC2626;
+            margin-top: var(--space-2);
+            font-weight: 500;
+            animation: slideInUp 0.3s ease-out;
+        }
+
+        .form-error-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            fill: currentColor;
+        }
+
+        /* Additional Actions */
+        .login-actions {
+            text-align: center;
+            margin-top: var(--space-8);
+            animation: fadeIn 1s ease-out 0.8s both;
+        }
+
+        .forgot-password {
+            color: var(--primary-blue);
+            font-size: 14px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .forgot-password:hover {
+            color: var(--primary-blue-dark);
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .login-footer {
+            margin-top: var(--space-10);
+            text-align: center;
+            animation: fadeIn 1s ease-out 1s both;
+        }
+
+        .security-notice {
+            font-size: 12px;
+            color: var(--neutral-500);
+            line-height: 1.5;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .compliance-badges {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-4);
+            margin-top: var(--space-4);
+        }
+
+        .compliance-badge {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            font-size: 11px;
+            color: var(--neutral-400);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .compliance-icon {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 640px) {
+            .login-page {
+                padding: var(--space-4);
+            }
+            
+            .login-container {
+                padding: var(--space-8) var(--space-6);
+                border-radius: 20px;
+            }
+            
+            .login-title {
+                font-size: 28px;
+            }
+            
+            .login-subtitle {
+                font-size: 15px;
+            }
+            
+            .form-control,
+            .btn-primary {
+                height: 52px;
+            }
+            
+            .compliance-badges {
+                flex-direction: column;
+                gap: var(--space-2);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-logo {
+                width: 64px;
+                height: 64px;
+                font-size: 24px;
+            }
+            
+            .login-title {
+                font-size: 24px;
+            }
+            
+            .floating-elements {
+                display: none;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .login-container {
+                background: white;
+                border: 2px solid var(--neutral-900);
+            }
+            
+            .form-control {
+                border-width: 2px;
+            }
+            
+            .btn-primary {
+                background: var(--neutral-900);
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .floating-elements {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="login-background"></div>
+    
+    <!-- Floating Elements -->
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+
+    <div class="login-page">
+        <div class="login-container">
+            <!-- Brand Section -->
+            <div class="login-brand">
+                <div class="login-logo">
+                    AS
+                </div>
+                <h1 class="login-title">Authentication System</h1>
+                <p class="login-subtitle">ระบบจัดการการเข้าสู่ระบบแบบรวมศูนย์ระดับองค์กร</p>
+                <div class="security-badge">
+                    <svg class="security-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    ระบบรักษาความปลอดภัยขั้นสูง
+                </div>
+            </div>
+
+            <!-- Alert Container -->
+            <div class="alert-container">
+                <div id="error-alert" class="alert alert-error" style="display: none;">
+                    <svg class="alert-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span id="error-message">เกิดข้อผิดพลาดในการเข้าสู่ระบบ</span>
+                </div>
+
+                <div id="info-alert" class="alert alert-info" style="display: none;">
+                    <svg class="alert-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span id="info-message">ข้อมูลสำหรับทดสอบ</span>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <form class="login-form" id="login-form">
+                <div class="form-group">
+                    <label class="form-label" for="email">อีเมล</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-control" 
+                        placeholder="กรุณากรอกอีเมลของคุณ"
+                        required
+                        autocomplete="email"
+                        spellcheck="false"
+                    >
+                    <div class="form-error" id="email-error" style="display: none;">
+                        <svg class="form-error-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>กรุณากรอกอีเมลที่ถูกต้อง</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">รหัสผ่าน</label>
+                    <div class="password-field">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            class="form-control" 
+                            placeholder="กรุณากรอกรหัสผ่านของคุณ"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <button type="button" class="password-toggle-btn" id="password-toggle" aria-label="แสดง/ซ่อนรหัสผ่าน">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="form-error" id="password-error" style="display: none;">
+                        <svg class="form-error-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>กรุณากรอกรหัสผ่าน</span>
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="remember" name="remember" class="checkbox">
+                        <label for="remember" class="checkbox-label">จดจำการเข้าสู่ระบบ</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="login-btn">
+                    <span id="login-text">เข้าสู่ระบบ</span>
+                    <div id="login-spinner" class="spinner" style="display: none;"></div>
+                </button>
+            </form>
+
+            <!-- Additional Actions -->
+            <div class="login-actions">
+                <a href="#" class="forgot-password">ลืมรหัสผ่าน?</a>
+            </div>
+
+            <!-- Footer -->
+            <div class="login-footer">
+                <div class="security-notice">
+                    ระบบนี้ได้รับการปกป้องด้วยมาตรการรักษาความปลอดภัยขั้นสูง<br>
+                    การเข้าใช้งานจะถูกบันทึกเพื่อการตรวจสอบและปฏิบัติตามมาตรฐานสากล
+                </div>
+                <div class="compliance-badges">
+                    <div class="compliance-badge">
+                        <svg class="compliance-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        ISO 27001
+                    </div>
+                    <div class="compliance-badge">
+                        <svg class="compliance-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        GDPR
+                    </div>
+                    <div class="compliance-badge">
+                        <svg class="compliance-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        SOC 2
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Professional Login Form Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('login-form');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const passwordToggle = document.getElementById('password-toggle');
+            const loginBtn = document.getElementById('login-btn');
+            const loginText = document.getElementById('login-text');
+            const loginSpinner = document.getElementById('login-spinner');
+            const errorAlert = document.getElementById('error-alert');
+            const infoAlert = document.getElementById('info-alert');
+            const errorMessage = document.getElementById('error-message');
+            const infoMessage = document.getElementById('info-message');
+
+            // Enhanced password toggle with smooth animation
+            passwordToggle.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                // Smooth icon transition
+                this.style.transform = 'translateY(-50%) scale(0.8)';
+                
+                setTimeout(() => {
+                    if (type === 'text') {
+                        this.innerHTML = `
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd"></path>
+                                <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z"></path>
+                            </svg>
+                        `;
+                    } else {
+                        this.innerHTML = `
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        `;
+                    }
+                    this.style.transform = 'translateY(-50%) scale(1)';
+                }, 150);
+            });
+
+            // Enhanced form validation
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            function showError(inputId, message) {
+                const input = document.getElementById(inputId);
+                const error = document.getElementById(inputId + '-error');
+                input.classList.add('error');
+                error.style.display = 'flex';
+                error.querySelector('span').textContent = message;
+                
+                // Add shake animation
+                input.style.animation = 'shake 0.5s ease-in-out';
+                setTimeout(() => {
+                    input.style.animation = '';
+                }, 500);
+            }
+
+            function hideError(inputId) {
+                const input = document.getElementById(inputId);
+                const error = document.getElementById(inputId + '-error');
+                input.classList.remove('error');
+                error.style.display = 'none';
+            }
+
+            function showAlert(message, type = 'error') {
+                hideAlert();
+                
+                const alert = type === 'error' ? errorAlert : infoAlert;
+                const messageEl = type === 'error' ? errorMessage : infoMessage;
+                
+                messageEl.textContent = message;
+                alert.style.display = 'flex';
+                
+                // Auto-hide info alerts after 5 seconds
+                if (type === 'info') {
+                    setTimeout(() => {
+                        hideAlert();
+                    }, 5000);
+                }
+            }
+
+            function hideAlert() {
+                errorAlert.style.display = 'none';
+                infoAlert.style.display = 'none';
+            }
+
+            // Real-time validation with debouncing
+            let emailTimeout;
+            emailInput.addEventListener('input', function() {
+                clearTimeout(emailTimeout);
+                emailTimeout = setTimeout(() => {
+                    if (this.value && !validateEmail(this.value)) {
+                        showError('email', 'รูปแบบอีเมลไม่ถูกต้อง');
+                    } else {
+                        hideError('email');
+                    }
+                }, 500);
+            });
+
+            emailInput.addEventListener('blur', function() {
+                if (this.value && !validateEmail(this.value)) {
+                    showError('email', 'กรุณากรอกอีเมลที่ถูกต้อง');
+                }
+            });
+
+            // Password strength indicator (visual feedback)
+            passwordInput.addEventListener('input', function() {
+                hideError('password');
+                
+                // Add visual feedback for password strength
+                const strength = getPasswordStrength(this.value);
+                this.style.borderColor = strength.color;
+            });
+
+            function getPasswordStrength(password) {
+                if (password.length === 0) return { color: '#E2E8F0', strength: 0 };
+                if (password.length < 6) return { color: '#EF4444', strength: 1 };
+                if (password.length < 8) return { color: '#F59E0B', strength: 2 };
+                return { color: '#10B981', strength: 3 };
+            }
+
+            // Enhanced form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Hide previous errors
+                hideError('email');
+                hideError('password');
+                hideAlert();
+
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+                let hasError = false;
+
+                // Validation
+                if (!email) {
+                    showError('email', 'กรุณากรอกอีเมล');
+                    hasError = true;
+                } else if (!validateEmail(email)) {
+                    showError('email', 'กรุณากรอกอีเมลที่ถูกต้อง');
+                    hasError = true;
+                }
+
+                if (!password) {
+                    showError('password', 'กรุณากรอกรหัสผ่าน');
+                    hasError = true;
+                } else if (password.length < 6) {
+                    showError('password', 'รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร');
+                    hasError = true;
+                }
+
+                if (hasError) {
+                    return;
+                }
+
+                // Show loading state with enhanced animation
+                loginBtn.disabled = true;
+                loginText.style.opacity = '0';
+                loginSpinner.style.display = 'block';
+                
+                setTimeout(() => {
+                    loginText.style.display = 'none';
+                    loginSpinner.style.opacity = '1';
+                }, 150);
+
+                // Simulate API call with realistic delay
+                setTimeout(() => {
+                    // Demo: Check credentials
+                    if (email === 'admin@example.com' && password === 'password123') {
+                        // Success animation
+                        loginBtn.style.background = 'linear-gradient(135deg, #10B981 0%, #059669 100%)';
+                        loginSpinner.style.display = 'none';
+                        loginText.textContent = 'เข้าสู่ระบบสำเร็จ';
+                        loginText.style.display = 'block';
+                        loginText.style.opacity = '1';
+                        
+                        // Redirect after success animation
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 1000);
+                    } else {
+                        // Error handling
+                        showAlert('อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง');
+                        
+                        // Reset button state
+                        loginBtn.disabled = false;
+                        loginBtn.style.background = '';
+                        loginSpinner.style.display = 'none';
+                        loginText.textContent = 'เข้าสู่ระบบ';
+                        loginText.style.display = 'block';
+                        loginText.style.opacity = '1';
+                        
+                        // Focus back to email field
+                        emailInput.focus();
+                    }
+                }, 2000);
+            });
+
+            // Show demo credentials after page load
+            setTimeout(() => {
+                showAlert('สำหรับการทดสอบ: admin@example.com / password123', 'info');
+            }, 2000);
+
+            // Add shake animation keyframes
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                    20%, 40%, 60%, 80% { transform: translateX(5px); }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Keyboard navigation enhancement
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && document.activeElement === emailInput) {
+                    passwordInput.focus();
+                }
+            });
+
+            // Auto-focus email field on page load
+            setTimeout(() => {
+                emailInput.focus();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
+

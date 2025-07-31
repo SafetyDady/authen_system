@@ -1,0 +1,43 @@
+{
+  "name": "auth-system-backend",
+  "version": "1.0.0",
+  "description": "Authentication System Backend API",
+  "main": "app/main.py",
+  "scripts": {
+    "dev": "python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload",
+    "start": "python -m uvicorn app.main:app --host 0.0.0.0 --port 8000",
+    "test": "python -m pytest tests/ -v",
+    "test:coverage": "python -m pytest tests/ --cov=app --cov-report=html",
+    "lint": "python -m flake8 app/ tests/",
+    "format": "python -m black app/ tests/",
+    "type-check": "python -m mypy app/",
+    "db:create": "python scripts/create_superuser.py",
+    "db:migrate": "python -m alembic upgrade head",
+    "db:reset": "rm -f auth_system.db && python scripts/create_superuser.py",
+    "build": "echo 'Backend build completed'",
+    "install": "pip install -r requirements.txt",
+    "docs": "python -c \"import webbrowser; webbrowser.open('http://localhost:8000/docs')\""
+  },
+  "keywords": [
+    "fastapi",
+    "authentication",
+    "api",
+    "python",
+    "jwt",
+    "authorization"
+  ],
+  "author": "Authentication System Team",
+  "license": "MIT",
+  "engines": {
+    "python": ">=3.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/auth-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/auth-system/issues"
+  },
+  "homepage": "https://github.com/your-org/auth-system#readme"
+}
+
