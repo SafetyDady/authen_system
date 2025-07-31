@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Authentication System Enterprise</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Enhanced Professional Dashboard Styles */
+        :root {
+            /* Enhanced Professional Color Palette */
+            --primary-navy: #0F172A;
+            --primary-blue: #1E40AF;
+            --primary-blue-light: #3B82F6;
+            --primary-blue-dark: #1E3A8A;
+            --primary-blue-ultra-light: #EFF6FF;
+            
+            --accent-indigo: #4F46E5;
+            --accent-purple: #7C3AED;
+            --accent-teal: #0D9488;
+            --accent-emerald: #059669;
+            --accent-amber: #D97706;
+            --accent-rose: #E11D48;
+            
+            --neutral-50: #F8FAFC;
+            --neutral-100: #F1F5F9;
+            --neutral-200: #E2E8F0;
+            --neutral-300: #CBD5E1;
+            --neutral-400: #94A3B8;
+            --neutral-500: #64748B;
+            --neutral-600: #475569;
+            --neutral-700: #334155;
+            --neutral-800: #1E293B;
+            --neutral-900: #0F172A;
+            
+            /* Status Colors */
+            --success: #10B981;
+            --success-light: #D1FAE5;
+            --warning: #F59E0B;
+            --warning-light: #FEF3C7;
+            --error: #EF4444;
+            --error-light: #FEE2E2;
+            --info: #3B82F6;
+            --info-light: #DBEAFE;
+            
+            /* Professional Gradients */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-dark: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%);
+            --gradient-blue: linear-gradient(135deg, #1E40AF 0%, #3B82F6 50%, #60A5FA 100%);
+            --gradient-success: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            --gradient-warning: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            
+            /* Enhanced Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+            
+            /* Professional Typography */
+            --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-body: 'Prompt', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            
+            /* Enhanced Spacing */
+            --space-px: 1px;
+            --space-0: 0;
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            --space-20: 5rem;
+            --space-24: 6rem;
+            
+            /* Layout Dimensions */
+            --sidebar-width: 280px;
+            --sidebar-collapsed-width: 80px;
+            --header-height: 72px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--neutral-50);
+            color: var(--neutral-900);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+            background: var(--neutral-50);
+        }
+
+        /* Enhanced Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            border-right: 1px solid var(--neutral-200);
+            box-shadow: var(--shadow-lg);
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            height: calc(100vh - var(--header-height));
+            z-index: 50;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .sidebar.collapsed {
+            width: var(--sidebar-collapsed-width);
+        }
+
+        .sidebar-header {
+            padding: var(--space-6) var(--space-6) var(--space-4) var(--space-6);
+            border-bottom: 1px solid var(--neutral-200);
+            background: var(--gradient-blue);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .sidebar-logo {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-logo:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar.collapsed .sidebar-title {
+            opacity: 0;
+        }
+
+        .sidebar-toggle {
+            position: absolute;
+            top: var(--space-6);
+            right: var(--space-4);
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .sidebar-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* User Profile in Sidebar */
+        .sidebar-user {
+            padding: var(--space-4) var(--space-6);
+            border-bottom: 1px solid var(--neutral-200);
+            background: var(--neutral-50);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .user-details {
+            flex: 1;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar.collapsed .user-details {
+            opacity: 0;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--neutral-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: var(--neutral-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Navigation Menu */
+        .sidebar-nav {
+            padding: var(--space-4) 0;
+        }
+
+        .nav-section {
+            margin-bottom: var(--space-6);
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--neutral-400);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0 var(--space-6) var(--space-2) var(--space-6);
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar.collapsed .nav-section-title {
+            opacity: 0;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3) var(--space-6);
+            color: var(--neutral-600);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-blue);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--primary-blue-ultra-light);
+            color: var(--primary-blue);
+        }
+
+        .nav-link:hover::before,
+        .nav-link.active::before {
+            transform: scaleY(1);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            fill: currentColor;
+        }
+
+        .nav-text {
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar.collapsed .nav-text {
+            opacity: 0;
+        }
+
+        .nav-badge {
+            background: var(--error);
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: auto;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar.collapsed .nav-badge {
+            opacity: 0;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            margin-top: var(--header-height);
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: calc(100vh - var(--header-height));
+            background: var(--neutral-50);
+        }
+
+        .sidebar.collapsed ~ .main-content {
+            margin-left: var(--sidebar-collapsed-width);
+        }
+
+        /* Enhanced Header */
+        .main-header {
+            height: var(--header-height);
+            background: var(--gradient-blue);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--space-8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 3s infinite;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: var(--space-6);
+            position: relative;
+            z-index: 1;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 14px;
+        }
+
+        .breadcrumb-item {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .breadcrumb-item:hover {
+            color: white;
+        }
+
+        .breadcrumb-item.active {
+            color: white;
+            font-weight: 600;
+        }
+
+        .breadcrumb-separator {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-search {
+            position: relative;
+        }
+
+        .search-input {
+            width: 320px;
+            height: 40px;
+            padding: 0 var(--space-4) 0 var(--space-10);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            font-size: 14px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .header-btn:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.5);
+            outline-offset: 2px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .user-menu-trigger:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.5);
+            outline-offset: 2px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: var(--space-3);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            fill: rgba(255, 255, 255, 0.7);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .header-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .header-btn.has-notification::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: var(--error);
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-menu-trigger {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .user-menu-trigger:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .user-menu-avatar {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .user-menu-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .user-menu-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .user-menu-role {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Content Area */
+        .content-area {
+            padding: var(--space-8);
+            max-width: 100%;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-header {
+            margin-bottom: var(--space-8);
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--neutral-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--neutral-600);
+            line-height: 1.6;
+        }
+
+        /* Stats Cards Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: var(--space-6);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--neutral-200);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+
+        .stat-card.primary::before {
+            background: var(--gradient-blue);
+        }
+
+        .stat-card.success::before {
+            background: var(--gradient-success);
+        }
+
+        .stat-card.warning::before {
+            background: var(--gradient-warning);
+        }
+
+        .stat-card.error::before {
+            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-4);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .stat-card.primary .stat-icon {
+            background: var(--gradient-blue);
+        }
+
+        .stat-card.success .stat-icon {
+            background: var(--gradient-success);
+        }
+
+        .stat-card.warning .stat-icon {
+            background: var(--gradient-warning);
+        }
+
+        .stat-card.error .stat-icon {
+            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        }
+
+        .stat-menu {
+            background: none;
+            border: none;
+            color: var(--neutral-400);
+            cursor: pointer;
+            padding: var(--space-1);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .stat-menu:hover {
+            background: var(--neutral-100);
+            color: var(--neutral-600);
+        }
+
+        .stat-content {
+            margin-bottom: var(--space-4);
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            font-family: var(--font-display);
+            color: var(--neutral-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--neutral-600);
+            font-weight: 500;
+        }
+
+        .stat-footer {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 13px;
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            font-weight: 600;
+        }
+
+        .stat-change.positive {
+            color: var(--success);
+        }
+
+        .stat-change.negative {
+            color: var(--error);
+        }
+
+        .stat-change-icon {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+
+        .stat-period {
+            color: var(--neutral-500);
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--space-8);
+            margin-bottom: var(--space-8);
+        }
+
+        /* Activity Feed */
+        .activity-card {
+            background: white;
+            border-radius: 16px;
+            padding: var(--space-6);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--neutral-200);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-4);
+            border-bottom: 1px solid var(--neutral-200);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--neutral-900);
+            flex: 1;
+        }
+
+        .card-action {
+            color: var(--primary-blue);
+            font-size: 14px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .card-action:hover {
+            color: var(--primary-blue-dark);
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            border-radius: 12px;
+            transition: background 0.2s ease;
+        }
+
+        .activity-item:hover {
+            background: var(--neutral-50);
+        }
+
+        .activity-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            font-size: 14px;
+            color: var(--neutral-900);
+            margin-bottom: var(--space-1);
+            line-height: 1.5;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: var(--neutral-500);
+        }
+
+        .activity-status {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .activity-status.success {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .activity-status.warning {
+            background: var(--warning-light);
+            color: var(--warning);
+        }
+
+        .activity-status.error {
+            background: var(--error-light);
+            color: var(--error);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
+        }
+
+        .action-card {
+            background: white;
+            border: 1px solid var(--neutral-200);
+            border-radius: 12px;
+            padding: var(--space-5);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .action-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-blue);
+        }
+
+        .action-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-blue-ultra-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-3) auto;
+            color: var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        .action-card:hover .action-icon {
+            background: var(--primary-blue);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .action-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--neutral-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .action-desc {
+            font-size: 12px;
+            color: var(--neutral-500);
+            line-height: 1.4;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 200;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            }
+
+            .main-header {
+                padding: 0 var(--space-4);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-search {
+                display: none;
+            }
+            
+            .search-input {
+                width: 240px;
+            }
+            
+            .content-area {
+                padding: var(--space-4);
+            }
+            
+            .page-title {
+                font-size: 24px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .main-header {
+                padding: 0 var(--space-3);
+            }
+
+            .breadcrumb {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 0 var(--space-2);
+            }
+            
+            .user-menu-info {
+                display: none;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-value {
+                font-size: 28px;
+            }
+
+            .header-actions {
+                gap: var(--space-2);
+            }
+
+            .header-btn {
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        /* Loading States */
+        .loading-skeleton {
+            background: linear-gradient(90deg, var(--neutral-200) 25%, var(--neutral-100) 50%, var(--neutral-200) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Utility Classes */
+        .hidden { display: none !important; }
+        .visible { display: block !important; }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+        .text-sm { font-size: 14px; }
+        .text-xs { font-size: 12px; }
+        .mb-4 { margin-bottom: var(--space-4); }
+        .mb-6 { margin-bottom: var(--space-6); }
+        .mt-4 { margin-top: var(--space-4); }
+        .mt-6 { margin-top: var(--space-6); }
+    </style>
+</head>
+<body>
+    <!-- Dashboard Layout -->
+    <div class="dashboard-layout">
+        <!-- Enhanced Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Sidebar Header -->
+            <div class="sidebar-header">
+                <div class="sidebar-brand">
+                    <div class="sidebar-logo">AS</div>
+                    <div class="sidebar-title">Auth System</div>
+                </div>
+                <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle Sidebar">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- User Profile -->
+            <div class="sidebar-user">
+                <div class="user-info">
+                    <div class="user-avatar">SA</div>
+                    <div class="user-details">
+                        <div class="user-name">Super Admin</div>
+                        <div class="user-role">SUPERADMIN</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav class="sidebar-nav">
+                <!-- Main Section -->
+                <div class="nav-section">
+                    <div class="nav-section-title">หลัก</div>
+                    <ul class="nav-menu">
+                        <li class="nav-item">
+                            <a href="#overview" class="nav-link active" data-section="overview">
+                                <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                                </svg>
+                                <span class="nav-text">ภาพรวม</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Admin Management Section -->
+                <div class="nav-section">
+                    <div class="nav-section-title">จัดการ</div>
+                    <ul class="nav-menu">
+                        <li class="nav-item">
+                            <a href="#admin-management" class="nav-link" data-section="admin-management">
+                                <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
+                                </svg>
+                                <span class="nav-text">จัดการ Admin</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#admin1" class="nav-link" data-section="admin1">
+                                <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="nav-text">Admin1</span>
+                                <span class="nav-badge">12</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#admin2" class="nav-link" data-section="admin2">
+                                <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="nav-text">Admin2</span>
+                                <span class="nav-badge">8</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#admin3" class="nav-link" data-section="admin3">
+                                <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="nav-text">Admin3</span>
+                                <span class="nav-badge">15</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Personal Section -->
+                <div class="nav-section">
+                    <div class="nav-section-title">บัญชี</div>
+                    <ul class="nav-menu">
+                        <li class="nav-item">
+                            <a href="#profile" class="nav-link" data-section="profile">
+                                <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="nav-text">โปรไฟล์</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#logout" class="nav-link" data-section="logout">
+                                <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="nav-text">ออกจากระบบ</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Enhanced Header -->
+            <header class="main-header">
+                <div class="header-left">
+                    <nav class="breadcrumb">
+                        <a href="#" class="breadcrumb-item">Dashboard</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-item active" id="current-section">Overview</span>
+                    </nav>
+                </div>
+
+                <div class="header-right">
+                    <!-- Search -->
+                    <div class="header-search">
+                        <input type="text" class="search-input" placeholder="ค้นหา...">
+                        <svg class="search-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+
+                    <!-- Header Actions -->
+                    <div class="header-actions">
+                        <button class="header-btn has-notification" title="การแจ้งเตือน">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path>
+                            </svg>
+                        </button>
+
+                        <button class="header-btn" title="ข้อความ">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- User Menu -->
+                    <div class="user-menu">
+                        <div class="user-menu-trigger">
+                            <div class="user-menu-avatar">SA</div>
+                            <div class="user-menu-info">
+                                <div class="user-menu-name">Super Admin</div>
+                                <div class="user-menu-role">Administrator</div>
+                            </div>
+                            <svg width="16" height="16" fill="rgba(255, 255, 255, 0.8)" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Overview Section -->
+                <div id="overview-section" class="content-section">
+                    <div class="page-header">
+                        <h1 class="page-title">ภาพรวมระบบ</h1>
+                        <p class="page-subtitle">สถิติและข้อมูลสำคัญของระบบจัดการการเข้าสู่ระบบ</p>
+                    </div>
+
+                    <!-- Stats Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card primary">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
+                                    </svg>
+                                </div>
+                                <button class="stat-menu">
+                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value">1,247</div>
+                                <div class="stat-label">ผู้ใช้ทั้งหมด</div>
+                            </div>
+                            <div class="stat-footer">
+                                <div class="stat-change positive">
+                                    <svg class="stat-change-icon" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    +12%
+                                </div>
+                                <span class="stat-period">จากเดือนที่แล้ว</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card success">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <button class="stat-menu">
+                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value">1,189</div>
+                                <div class="stat-label">ผู้ใช้ที่ใช้งานอยู่</div>
+                            </div>
+                            <div class="stat-footer">
+                                <div class="stat-change positive">
+                                    <svg class="stat-change-icon" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    +8%
+                                </div>
+                                <span class="stat-period">จากเดือนที่แล้ว</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card warning">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <button class="stat-menu">
+                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value">58</div>
+                                <div class="stat-label">ผู้ใช้ที่ไม่ได้ใช้งาน</div>
+                            </div>
+                            <div class="stat-footer">
+                                <div class="stat-change negative">
+                                    <svg class="stat-change-icon" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    -3%
+                                </div>
+                                <span class="stat-period">จากเดือนที่แล้ว</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card primary">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <button class="stat-menu">
+                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value">342</div>
+                                <div class="stat-label">การเข้าสู่ระบบวันนี้</div>
+                            </div>
+                            <div class="stat-footer">
+                                <div class="stat-change positive">
+                                    <svg class="stat-change-icon" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    +18%
+                                </div>
+                                <span class="stat-period">จากเมื่อวาน</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Grid -->
+                    <div class="content-grid">
+                        <!-- Activity Feed -->
+                        <div class="activity-card">
+                            <div class="card-header">
+                                <h2 class="card-title">กิจกรรมล่าสุด</h2>
+                                <a href="#" class="card-action">ดูทั้งหมด</a>
+                            </div>
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-avatar">JD</div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">
+                                            <strong>John Doe</strong> เข้าสู่ระบบ
+                                            <span class="activity-status success">สำเร็จ</span>
+                                        </div>
+                                        <div class="activity-time">2 นาทีที่แล้ว</div>
+                                    </div>
+                                </div>
+
+                                <div class="activity-item">
+                                    <div class="activity-avatar" style="background: var(--gradient-success);">AS</div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">
+                                            <strong>Admin Smith</strong> สร้างผู้ใช้ใหม่
+                                            <span class="activity-status success">สำเร็จ</span>
+                                        </div>
+                                        <div class="activity-time">5 นาทีที่แล้ว</div>
+                                    </div>
+                                </div>
+
+                                <div class="activity-item">
+                                    <div class="activity-avatar" style="background: var(--gradient-warning);">MJ</div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">
+                                            <strong>Mary Johnson</strong> พยายามเข้าสู่ระบบแต่ไม่สำเร็จ
+                                            <span class="activity-status warning">ล้มเหลว</span>
+                                        </div>
+                                        <div class="activity-time">8 นาทีที่แล้ว</div>
+                                    </div>
+                                </div>
+
+                                <div class="activity-item">
+                                    <div class="activity-avatar" style="background: var(--gradient-success);">RW</div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">
+                                            <strong>Robert Wilson</strong> อัพเดทโปรไฟล์
+                                            <span class="activity-status success">สำเร็จ</span>
+                                        </div>
+                                        <div class="activity-time">12 นาทีที่แล้ว</div>
+                                    </div>
+                                </div>
+
+                                <div class="activity-item">
+                                    <div class="activity-avatar" style="background: var(--gradient-warning);">SA</div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">
+                                            <strong>Super Admin</strong> เปลี่ยนสิทธิ์ผู้ใช้
+                                            <span class="activity-status warning">เตือน</span>
+                                        </div>
+                                        <div class="activity-time">15 นาทีที่แล้ว</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="activity-card">
+                            <div class="card-header">
+                                <h2 class="card-title">การดำเนินการด่วน</h2>
+                            </div>
+                            <div class="quick-actions">
+                                <a href="#admin-management" class="action-card" data-section="admin-management">
+                                    <div class="action-icon">
+                                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="action-title">จัดการ Admin</div>
+                                    <div class="action-desc">เพิ่ม แก้ไข ลบ Admin</div>
+                                </a>
+
+                                <a href="#" class="action-card">
+                                    <div class="action-icon">
+                                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="action-title">ส่งออกข้อมูล</div>
+                                    <div class="action-desc">ดาวน์โหลดรายงาน</div>
+                                </a>
+
+                                <a href="#" class="action-card">
+                                    <div class="action-icon">
+                                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="action-title">ตั้งค่าระบบ</div>
+                                    <div class="action-desc">กำหนดค่าต่างๆ</div>
+                                </a>
+
+                                <a href="#" class="action-card">
+                                    <div class="action-icon">
+                                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="action-title">ดูรายงาน</div>
+                                    <div class="action-desc">สถิติและการวิเคราะห์</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Management Section -->
+                <div id="admin-management-section" class="content-section hidden">
+                    <div class="page-header">
+                        <h1 class="page-title">จัดการ Admin</h1>
+                        <p class="page-subtitle">จัดการบัญชี Admin และกำหนดสิทธิ์การเข้าถึงระบบ</p>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="card-header">
+                            <h2 class="card-title">รายการ Admin ทั้งหมด</h2>
+                            <button class="action-card" style="padding: 8px 16px; margin: 0; background: var(--primary-blue); color: white; border-radius: 8px; font-size: 14px;">
+                                เพิ่ม Admin ใหม่
+                            </button>
+                        </div>
+                        
+                        <div style="padding: 20px 0;">
+                            <p style="color: var(--neutral-600); text-align: center; font-size: 16px;">
+                                🚧 หน้านี้อยู่ระหว่างการพัฒนา<br>
+                                จะมีฟีเจอร์การจัดการ Admin แบบครบถ้วน
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin1 Section -->
+                <div id="admin1-section" class="content-section hidden">
+                    <div class="page-header">
+                        <h1 class="page-title">Admin1 Management</h1>
+                        <p class="page-subtitle">จัดการผู้ใช้ในความรับผิดชอบของ Admin1</p>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="card-header">
+                            <h2 class="card-title">ผู้ใช้ภายใต้ Admin1</h2>
+                        </div>
+                        
+                        <div style="padding: 20px 0;">
+                            <p style="color: var(--neutral-600); text-align: center; font-size: 16px;">
+                                👥 จำนวนผู้ใช้: 12 คน<br>
+                                📊 สถานะ: ใช้งานปกติ
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin2 Section -->
+                <div id="admin2-section" class="content-section hidden">
+                    <div class="page-header">
+                        <h1 class="page-title">Admin2 Management</h1>
+                        <p class="page-subtitle">จัดการผู้ใช้ในความรับผิดชอบของ Admin2</p>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="card-header">
+                            <h2 class="card-title">ผู้ใช้ภายใต้ Admin2</h2>
+                        </div>
+                        
+                        <div style="padding: 20px 0;">
+                            <p style="color: var(--neutral-600); text-align: center; font-size: 16px;">
+                                👥 จำนวนผู้ใช้: 8 คน<br>
+                                📊 สถานะ: ใช้งานปกติ
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin3 Section -->
+                <div id="admin3-section" class="content-section hidden">
+                    <div class="page-header">
+                        <h1 class="page-title">Admin3 Management</h1>
+                        <p class="page-subtitle">จัดการผู้ใช้ในความรับผิดชอบของ Admin3</p>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="card-header">
+                            <h2 class="card-title">ผู้ใช้ภายใต้ Admin3</h2>
+                        </div>
+                        
+                        <div style="padding: 20px 0;">
+                            <p style="color: var(--neutral-600); text-align: center; font-size: 16px;">
+                                👥 จำนวนผู้ใช้: 15 คน<br>
+                                📊 สถานะ: ใช้งานปกติ
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Section -->
+                <div id="profile-section" class="content-section hidden">
+                    <div class="page-header">
+                        <h1 class="page-title">โปรไฟล์</h1>
+                        <p class="page-subtitle">จัดการข้อมูลส่วนตัวและการตั้งค่าบัญชี</p>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="card-header">
+                            <h2 class="card-title">ข้อมูลส่วนตัว</h2>
+                        </div>
+                        
+                        <div style="padding: 20px 0;">
+                            <p style="color: var(--neutral-600); text-align: center; font-size: 16px;">
+                                👤 Super Admin<br>
+                                📧 admin@example.com<br>
+                                🔐 เปลี่ยนรหัสผ่าน | แก้ไขข้อมูล
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Enhanced Dashboard Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            const currentSectionEl = document.getElementById('current-section');
+            const actionCards = document.querySelectorAll('.action-card[data-section]');
+
+            // Sidebar toggle functionality
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('collapsed');
+                
+                // Save state to localStorage
+                localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+            });
+
+            // Restore sidebar state
+            if (localStorage.getItem('sidebarCollapsed') === 'true') {
+                sidebar.classList.add('collapsed');
+            }
+
+            // Navigation functionality
+            function showSection(sectionId) {
+                // Hide all sections
+                contentSections.forEach(section => {
+                    section.classList.add('hidden');
+                });
+
+                // Show target section
+                const targetSection = document.getElementById(sectionId + '-section');
+                if (targetSection) {
+                    targetSection.classList.remove('hidden');
+                }
+
+                // Update active nav link
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+
+                const activeLink = document.querySelector(`[data-section="${sectionId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+
+                // Update breadcrumb
+                const sectionNames = {
+                    'overview': 'ภาพรวม',
+                    'admin-management': 'จัดการ Admin',
+                    'admin1': 'Admin1',
+                    'admin2': 'Admin2', 
+                    'admin3': 'Admin3',
+                    'profile': 'โปรไฟล์',
+                    'logout': 'ออกจากระบบ'
+                };
+
+                currentSectionEl.textContent = sectionNames[sectionId] || sectionId;
+
+                // Update URL hash
+                window.location.hash = sectionId;
+
+                // Save current section
+                localStorage.setItem('currentSection', sectionId);
+            }
+
+            // Handle navigation clicks
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    
+                    if (section === 'logout') {
+                        if (confirm('คุณต้องการออกจากระบบหรือไม่?')) {
+                            window.location.href = 'login-professional.html';
+                        }
+                        return;
+                    }
+                    
+                    showSection(section);
+                });
+            });
+
+            // Handle action card clicks
+            actionCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    showSection(section);
+                });
+            });
+
+            // Handle browser back/forward
+            window.addEventListener('hashchange', function() {
+                const hash = window.location.hash.substring(1);
+                if (hash) {
+                    showSection(hash);
+                }
+            });
+
+            // Initialize page
+            let initialSection = 'overview';
+            
+            // Check URL hash
+            if (window.location.hash) {
+                initialSection = window.location.hash.substring(1);
+            }
+            // Check localStorage
+            else if (localStorage.getItem('currentSection')) {
+                initialSection = localStorage.getItem('currentSection');
+            }
+
+            showSection(initialSection);
+
+            // Enhanced search functionality
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) {
+                let searchTimeout;
+                
+                searchInput.addEventListener('input', function() {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        const query = this.value.toLowerCase();
+                        console.log('Searching for:', query);
+                        // Implement search logic here
+                    }, 300);
+                });
+            }
+
+            // Notification handling
+            const notificationBtn = document.querySelector('.header-btn.has-notification');
+            if (notificationBtn) {
+                notificationBtn.addEventListener('click', function() {
+                    alert('คุณมีการแจ้งเตือน 3 รายการ');
+                });
+            }
+
+            // Stats card animations
+            const statCards = document.querySelectorAll('.stat-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationDelay = Math.random() * 0.3 + 's';
+                        entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                    }
+                });
+            });
+
+            statCards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // Auto-refresh data every 30 seconds
+            setInterval(() => {
+                console.log('Refreshing dashboard data...');
+                // Implement data refresh logic here
+            }, 30000);
+
+            // Add loading states for better UX
+            function showLoading(element) {
+                element.classList.add('loading-skeleton');
+            }
+
+            function hideLoading(element) {
+                element.classList.remove('loading-skeleton');
+            }
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                // Ctrl/Cmd + K for search
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    searchInput?.focus();
+                }
+                
+                // Ctrl/Cmd + B for sidebar toggle
+                if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
+                    e.preventDefault();
+                    sidebarToggle.click();
+                }
+            });
+
+            // Mobile responsiveness
+            function handleResize() {
+                if (window.innerWidth <= 1024) {
+                    sidebar.classList.add('mobile');
+                    // Add mobile menu toggle functionality
+                    sidebarToggle.addEventListener('click', function() {
+                        sidebar.classList.toggle('open');
+                    });
+                } else {
+                    sidebar.classList.remove('mobile', 'open');
+                }
+            }
+
+            window.addEventListener('resize', handleResize);
+            handleResize();
+
+            // Click outside sidebar to close on mobile
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 1024 && 
+                    !sidebar.contains(e.target) && 
+                    !sidebarToggle.contains(e.target) &&
+                    sidebar.classList.contains('open')) {
+                    sidebar.classList.remove('open');
+                }
+            });
+
+            console.log('Dashboard initialized successfully');
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,53 @@
+# Node
+node_modules/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Alembic
+migrations/versions/*.pyc
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+/dist/
+/build/
+
+# Others
+*.env
+*.local
+*.sqlite3
+
+# Frontend
+pnpm-lock.yaml
+
+# Docker
+*.pid
+
+# Coverage
+coverage/
+*.cover
+*.coverage
+
+# Test
+*.test.js.snap
+
+# Misc
+*.swp
+*.swo
