@@ -140,31 +140,21 @@ function loadSavedCredentials() {
 }
 
 // Check existing login
-async function checkExistingLogin() {
+function checkExistingLogin() {
     const token = localStorage.getItem('access_token');
     const loginTime = localStorage.getItem('login_time');
     
     if (token && loginTime) {
-        try {
-            // Validate token with server
-            const response = await fetch(`${API_BASE_URL}/auth/me`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            
-            if (response.ok) {
-                // Token is valid, redirect to dashboard
-                window.location.href = 'dashboard.html';
-            } else {
-                // Token invalid, clear storage
-                clearLoginData();
-            }
-        } catch (error) {
-            console.error('Token validation error:', error);
-            // Network error or server down, clear storage to be safe
+        // Check if token is still valid (less than 24 hours old)
+        const loginDate = new Date(loginTime);
+        const now = new Date();
+        const hoursDiff = (now - loginDate) / (1000 * 60 * 60);
+        
+        if (hoursDiff < 24) {
+            // Token might still be valid, redirect to dashboard
+            window.location.href = 'dashboard.html';
+        } else {
+            // Token expired, clear storage
             clearLoginData();
         }
     }
